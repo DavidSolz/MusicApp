@@ -1,11 +1,10 @@
-/**
- * Project Untitled
- */
-
-
 #ifndef _PLAYER_H
 #define _PLAYER_H
+#include "SoundStream.h"
+#include "Playlist.h"
+#include<iostream>
 
+#pragma once
 class Player {
 public: 
     
@@ -21,17 +20,17 @@ char Stop();
  * @param track
  * @param playlist
  */
-char AddTrack(track track, Playlist playlist);
+char AddTrack(const track &_track, Playlist &playlist);
     
 /**
  * @param track
  * @param playlist
  */
-char RemoveTrack(track track, Playlist playlist);
+char RemoveTrack(const track &_track, Playlist playlist);
 private: 
     SoundStream* soundStream;
     Playlist* queue;
-    List<Playlist*> playlist;
+    std::list<Playlist*> playlist;
 };
 
 #endif //_PLAYER_H

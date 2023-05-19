@@ -1,18 +1,17 @@
-/**
- * Project Untitled
- */
-
-
 #ifndef _COMMANDER_H
 #define _COMMANDER_H
+#include "ICommand.h"
+#include "Player.h"
 
 class Commander {
 public: 
     
+Commander(const Player &player);
+
 /**
- * @param ICommand command
+ * @param command
  */
-void SetCommand(void ICommand command);
+void SetCommand(const ICommand &command);
     
 void ExecuteCommand();
 private: 

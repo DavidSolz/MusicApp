@@ -1,26 +1,20 @@
-/**
- * Project Untitled
- */
-
-
 #include "Commander.h"
 
-/**
- * Commander implementation
- */
-
+Commander::Commander(const Player &player){
+    this->player=&(Player)player;
+}
 
 /**
  * @param ICommand command
  * @return void
  */
-void Commander::SetCommand(void ICommand command) {
-    return;
+void Commander::SetCommand(const ICommand &command) {
+    this->command = &(ICommand)command;
 }
 
 /**
  * @return void
  */
 void Commander::ExecuteCommand() {
-    return;
+    
 }
