@@ -5,12 +5,12 @@ SoundStream::SoundStream(std::string name):name(name){
     outStream = new OutStreamPulseAudio();
     fileHandler = new FileHandlerUNIX();
     buff = nullptr;
+    audioThread = nullptr;
+    bytesRead = 0;
 }
 
 SoundStream::~SoundStream(){
-    if (playing){
-        stop();
-    }
+    stop();
     delete outStream;
     delete fileHandler;
     if (buff){
@@ -19,6 +19,7 @@ SoundStream::~SoundStream(){
 }
 
 char SoundStream::init(const std::string& fileName){
+    stop();
     if (fileHandler->openAudioWav(fileName, currentlyPlayingInfo)){
         std::cerr << "ERR: openning file" << std::endl;
         return -1;
@@ -27,7 +28,7 @@ char SoundStream::init(const std::string& fileName){
     if (buff){
         delete buff;
     }
-    bytesRead = 0;
+
     buff = new audioBuffer(512*currentlyPlayingInfo.blockAlign);
 
     if (outStream->init(currentlyPlayingInfo, name, fileName)){
@@ -46,14 +47,19 @@ void SoundStream::play(){
 }
 
 void SoundStream::pause(){
-    if (playing){
-        playing = false;
+    playing = false;
+    if (audioThread && audioThread->joinable()){
         audioThread->join();
     }
 }
 
 void SoundStream::stop(){
+    bytesRead = 0;
     pause();
+    if (audioThread){
+        delete audioThread;
+        audioThread = nullptr;
+    }
     fileHandler->closeAudio();
 }
 
@@ -68,7 +74,9 @@ void SoundStream::audioThreadF(){
             break;
         }
     }
-    playing = false;
+    if (playing){
+        stop();
+    }
 }
 
 bool SoundStream::isPlaying(){
