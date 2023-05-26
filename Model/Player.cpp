@@ -1,14 +1,5 @@
-/**
- * Project Untitled
- */
-
 
 #include "Player.h"
-
-/**
- * Player implementation
- */
-
 
 /**
  * @return char
@@ -43,8 +34,16 @@ char Player::Stop() {
  * @param playlist
  * @return char
  */
-char Player::AddTrack(track track, Playlist playlist) {
-    return '0';
+char Player::AddTrack(const track *_track, Playlist *playlist) {
+    try
+    {
+        playlist->AddTrack((track *)_track);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
 }
 
 /**
@@ -52,6 +51,14 @@ char Player::AddTrack(track track, Playlist playlist) {
  * @param playlist
  * @return char
  */
-char Player::RemoveTrack(track track, Playlist playlist) {
-    return '0';
+char Player::RemoveTrack(const track *_track, Playlist *playlist) {
+    try
+    {
+        playlist->RemoveTrack((track *)_track);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
 }

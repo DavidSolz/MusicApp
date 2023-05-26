@@ -1,15 +1,25 @@
-/**
- * Project Untitled
- */
-
-
 #ifndef _TRACK_H
 #define _TRACK_H
 
-class track {
-public: 
-    string path;
-    string name;
+#include<string>
+
+#pragma once
+
+class track{
+public:
+
+/// @brief 
+/// @param name 
+/// @param path 
+track(const std::string &name, const std::string path);
+
+std::string GetName();
+std::string GetPath();
+
+private:
+    std::string path;
+    std::string name;
 };
 
-#endif //_TRACK_H
+
+#endif

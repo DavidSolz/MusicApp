@@ -1,33 +1,25 @@
-/**
- * Project Untitled
- */
-
 
 #include "Playlist.h"
+#include<iostream>
 
-/**
- * Playlist implementation
- */
-
-
-/**
- * @param track
- */
-void Playlist::AddTrack(track track) {
-
+void Playlist::AddTrack(const track *_track) {
+    tracks.push_back((track*)_track);
 }
 
-/**
- * @param track
- */
-void Playlist::RemoveTrack(track track) {
-
+void Playlist::RemoveTrack(const track *_track) {
+    tracks.erase(std::remove(tracks.begin(), tracks.end(), _track), tracks.end());
 }
 
-/**
- * @param track
- * @param offset
- */
-void Playlist::MoveTrack(track track, int offset) {
+void Playlist::MoveTrack(const track *_track, const int &offset) {
+
+    auto it = std::find(tracks.begin(), tracks.end(), _track);
+
+    if(it==tracks.end()){
+        std::cerr<<"Element not found\n";
+        return;
+    }
+
+    std::rotate(it,it+offset,tracks.end());
+
 
 }
