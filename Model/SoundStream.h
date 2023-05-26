@@ -13,19 +13,26 @@
 
 class SoundStream{
 public:
-    SoundStream(const uint16_t& buffSize);
+    SoundStream(std::string name);
     ~SoundStream();
     char init(const std::string& fileName);
     void play();
     void pause();
     void stop();
 
+    bool isPlaying();
+    void printCurrentlyPlayingInfo();
+    std::string fileLength();
+    std::string timeElapsed();
+
 private:
+    const std::string name;
     std::thread* audioThread;
     IOutStream* outStream;
     IFileHandler* fileHandler;
     bool playing;
-
+    audioFileInfo currentlyPlayingInfo;
+    ulong bytesRead;
     audioBuffer* buff;
     void audioThreadF();
 };

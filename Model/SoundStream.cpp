@@ -1,10 +1,10 @@
 #include "SoundStream.h"
 
-SoundStream::SoundStream(const uint16_t& buffSize){
+SoundStream::SoundStream(std::string name):name(name){
     playing = false;
     outStream = new OutStreamPulseAudio();
     fileHandler = new FileHandlerUNIX();
-    buff = new audioBuffer(buffSize);
+    buff = nullptr;
 }
 
 SoundStream::~SoundStream(){
@@ -13,20 +13,24 @@ SoundStream::~SoundStream(){
     }
     delete outStream;
     delete fileHandler;
-    delete buff;
+    if (buff){
+        delete buff;
+    }
 }
 
 char SoundStream::init(const std::string& fileName){
-    audioFileInfo info;
-
-    if (fileHandler->openAudioWav(fileName, info)){
+    if (fileHandler->openAudioWav(fileName, currentlyPlayingInfo)){
         std::cerr << "ERR: openning file" << std::endl;
         return -1;
     }
 
-    std::cout << uint(info.bitDepth) << " " << info.sampleRate << " " << uint(info.channels) << " " << info.littleEndian << std::endl;
+    if (buff){
+        delete buff;
+    }
+    bytesRead = 0;
+    buff = new audioBuffer(512*currentlyPlayingInfo.blockAlign);
 
-    if (outStream->init(info, "player.cpp", fileName)){
+    if (outStream->init(currentlyPlayingInfo, name, fileName)){
         std::cerr << "ERR: openning stream" << std::endl;
         return -1;
     }
@@ -58,10 +62,25 @@ void SoundStream::audioThreadF(){
         if (fileHandler->readAudio(buff)){
             break;
         }
+        bytesRead += buff->count;
         if (outStream->playBuffer(buff)){
             std::cerr << "ERR: playing" << std::endl;
             break;
         }
     }
     playing = false;
+}
+
+bool SoundStream::isPlaying(){
+    return playing;
+}
+
+void SoundStream::printCurrentlyPlayingInfo(){
+    currentlyPlayingInfo.print();
+}
+std::string SoundStream::fileLength(){
+    return audioFileInfo::secondsToString(currentlyPlayingInfo.length());
+}
+std::string SoundStream::timeElapsed(){
+    return audioFileInfo::secondsToString(currentlyPlayingInfo.timeElapsed(bytesRead));
 }
