@@ -1,12 +1,17 @@
-/**
- * Project Untitled
- */
-
-
 #ifndef _IOUTSTREAM_H
 #define _IOUTSTREAM_H
 
-class IOutStream {
+#include <pulse/simple.h>
+#include <pulse/error.h>
+#include <string>
+
+#include "audioBuffer.h"
+#include "audioFileInfo.h"
+
+class IOutStream{
+public:
+    virtual char init(const audioFileInfo& info, const std::string& appName, const std::string& description){};
+    virtual char playBuffer(audioBuffer* buffer){};
 };
 
-#endif //_IOUTSTREAM_H
+#endif
