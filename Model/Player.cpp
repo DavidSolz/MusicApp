@@ -34,10 +34,10 @@ char Player::Stop() {
  * @param playlist
  * @return char
  */
-char Player::AddTrack(const track &_track, Playlist &playlist) {
+char Player::AddTrack(const track *_track, Playlist *playlist) {
     try
     {
-        playlist.AddTrack(_track);
+        playlist->AddTrack((track *)_track);
     }
     catch(const std::exception& e)
     {
@@ -51,10 +51,10 @@ char Player::AddTrack(const track &_track, Playlist &playlist) {
  * @param playlist
  * @return char
  */
-char Player::RemoveTrack(const track &_track, Playlist playlist) {
+char Player::RemoveTrack(const track *_track, Playlist *playlist) {
     try
     {
-        playlist.RemoveTrack(_track);
+        playlist->RemoveTrack((track *)_track);
     }
     catch(const std::exception& e)
     {

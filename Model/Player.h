@@ -1,6 +1,6 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
-#include "SoundStream.h"
+//#include "SoundStream.h"
 #include "Playlist.h"
 #include<iostream>
 
@@ -20,15 +20,15 @@ char Stop();
  * @param track
  * @param playlist
  */
-char AddTrack(const track &_track, Playlist &playlist);
+char AddTrack(const track *_track, Playlist *playlist);
     
 /**
  * @param track
  * @param playlist
  */
-char RemoveTrack(const track &_track, Playlist playlist);
+char RemoveTrack(const track *_track, Playlist *playlist);
 private: 
-    SoundStream* soundStream;
+    //SoundStream* soundStream;
     Playlist* queue;
     std::list<Playlist*> playlist;
 };
