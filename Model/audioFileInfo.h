@@ -15,9 +15,9 @@ struct audioFileInfo{
     uint32_t fileLength;
     bool littleEndian;
 
-    ulong length();
-    ulong timeElapsed(uint32_t bytesRead);
-    static std::string secondsToString(ulong seconds);
+    unsigned long length();
+    unsigned long timeElapsed(uint32_t bytesRead);
+    static std::string secondsToString(unsigned long seconds);
     void print();
 };
 

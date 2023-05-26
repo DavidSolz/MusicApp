@@ -7,14 +7,16 @@
 #define _EQUALIZER_H
 
 #include "AudioEffect.h"
+#include<string>
 
+#pragma once
 
 class Equalizer: public AudioEffect {
 public: 
     
 void Compute();
     
-string GetInfo();
+std::string GetInfo();
 };
 
 #endif //_EQUALIZER_H

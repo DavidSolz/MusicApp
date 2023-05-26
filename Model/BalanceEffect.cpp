@@ -5,6 +5,7 @@
 
 #include "BalanceEffect.h"
 
+
 /**
  * BalanceEffect implementation
  */
@@ -20,6 +21,6 @@ void BalanceEffect::Compute() {
 /**
  * @return string
  */
-string BalanceEffect::GetInfo() {
+std::string BalanceEffect::GetInfo() {
     return "";
 }

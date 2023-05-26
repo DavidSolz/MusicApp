@@ -20,6 +20,6 @@ void Equalizer::Compute() {
 /**
  * @return string
  */
-string Equalizer::GetInfo() {
+std::string Equalizer::GetInfo() {
     return "";
 }

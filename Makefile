@@ -1,23 +1,11 @@
 COMPILER = g++
-FLAGS = -w -Wall
+FLAGS = -w -Wall -lpulse-simple -lpulse -std=c++17
 OUTPUTFOLDER = ./Out
 INPUTFOLDER = ./Model
 
+musicapp:
+	$(COMPILER) $(FLAGS) $(INPUTFOLDER)/*.cpp -o $(OUTPUTFOLDER)/musicapp
+
 clean:
-	rm -rf $(OUTPUTFOLDER)/*.o
-
-musicapp: player.o commander.o
-	$(COMPILER) $(FLAGS) $(INPUTFOLDER)/Program.cpp $(OUTPUTFOLDER)/*.o -o $(OUTPUTFOLDER)/musicapp
-
-commander.o: player.o playlist.o track.o 
-	$(COMPILER) $(FLAGS) -c $(INPUTFOLDER)/Commander.cpp $(INPUTFOLDER)/ICommand.h $(OUTPUTFOLDER)/*.o -o $(OUTPUTFOLDER)/commander.o
-
-player.o: playlist.o track.o
-	$(COMPILER) $(FLAGS) -c $(INPUTFOLDER)/Player.cpp $(OUTPUTFOLDER)/*.o -o $(OUTPUTFOLDER)/player.o
-
-playlist.o: track.o
-	$(COMPILER) $(FLAGS) -c $(INPUTFOLDER)/Playlist.cpp $(OUTPUTFOLDER)/track.o -o $(OUTPUTFOLDER)/playlist.o
-
-track.o:
-	$(COMPILER) $(FLAGS) -c $(INPUTFOLDER)/track.cpp -o $(OUTPUTFOLDER)/track.o
+	rm -rf $(OUTPUTFOLDER)/*
 

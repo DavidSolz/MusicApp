@@ -10,6 +10,11 @@
 
 
 class PlayCommand: public ICommand {
+
+void Process(const Player *player){
+    std::cout<<"Playing\n";
+}
+
 };
 
 #endif //_PLAYCOMMAND_H

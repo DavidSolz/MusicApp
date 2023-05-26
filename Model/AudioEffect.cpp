@@ -13,13 +13,13 @@
 /**
  * @return void
  */
-virtual void AudioEffect::Compute() {
+void AudioEffect::Compute() {
     return;
 }
 
 /**
  * @return string
  */
-virtual string AudioEffect::GetInfo() {
+std::string AudioEffect::GetInfo() {
     return "";
 }

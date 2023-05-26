@@ -7,14 +7,16 @@
 #define _VOLUMEEFFECT_H
 
 #include "AudioEffect.h"
+#include<string>
 
+#pragma once
 
 class VolumeEffect: public AudioEffect {
 public: 
     
 void Compute();
     
-string GetInfo();
+std::string GetInfo();
 private: 
     float volume;
 };

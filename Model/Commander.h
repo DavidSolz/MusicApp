@@ -40,6 +40,7 @@ void ReadFromFile(const std::string &filename);
 
 
 void ExecuteCommand();
+
 private: 
     ICommand *command;
     Player *player;

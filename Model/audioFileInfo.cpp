@@ -1,17 +1,16 @@
 #include "audioFileInfo.h"
-#include <fmt/core.h>
 #include <string>
 
-ulong audioFileInfo::length(){
+unsigned long audioFileInfo::length(){
     return fileLength/byteRate;
 }
 
-ulong audioFileInfo::timeElapsed(uint32_t bytesRead){
+unsigned long audioFileInfo::timeElapsed(uint32_t bytesRead){
     return bytesRead/byteRate;
 }
 
-std::string audioFileInfo::secondsToString(ulong seconds){
-    uint minutes = seconds/60;
+std::string audioFileInfo::secondsToString(unsigned long seconds){
+    unsigned int minutes = seconds/60;
     seconds = seconds%60;
     std::string out = "";
     if (minutes < 10){

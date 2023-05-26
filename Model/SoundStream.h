@@ -32,7 +32,7 @@ private:
     IFileHandler* fileHandler;
     bool playing;
     audioFileInfo currentlyPlayingInfo;
-    ulong bytesRead;
+    unsigned long bytesRead;
     audioBuffer* buff;
     void audioThreadF();
 };

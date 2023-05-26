@@ -5,7 +5,7 @@
 class ICommand {
 public:
 
-void Process(const Player *player);
+virtual void Process(const Player *player) = 0;
 
 
 };

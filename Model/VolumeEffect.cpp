@@ -20,6 +20,6 @@ void VolumeEffect::Compute() {
 /**
  * @return string
  */
-string VolumeEffect::GetInfo() {
+std::string VolumeEffect::GetInfo() {
     return "";
 }

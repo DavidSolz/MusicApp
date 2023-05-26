@@ -30,7 +30,7 @@ char RemoveTrack(const track *_track, Playlist *playlist);
 private: 
     //SoundStream* soundStream;
     Playlist* queue;
-    std::list<Playlist*> playlist;
+    //std::list<Playlist*> playlist;
 };
 
 #endif //_PLAYER_H

@@ -7,14 +7,15 @@
 #define _BALANCEEFFECT_H
 
 #include "AudioEffect.h"
-
+#include<string>
+#pragma once
 
 class BalanceEffect: public AudioEffect {
 public: 
     
 void Compute();
     
-string GetInfo();
+std::string GetInfo();
 private: 
     float balance;
 };
