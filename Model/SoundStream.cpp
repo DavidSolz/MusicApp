@@ -13,26 +13,19 @@ SoundStream::~SoundStream(){
     stop();
     delete outStream;
     delete fileHandler;
-    if (buff){
-        delete buff;
-    }
 }
 
 char SoundStream::init(const std::string& fileName){
     stop();
     if (fileHandler->openAudioWav(fileName, currentlyPlayingInfo)){
-        std::cerr << "ERR: openning file" << std::endl;
+        fprintf(stderr , "ERR: openning file\n");
         return -1;
-    }
-
-    if (buff){
-        delete buff;
     }
 
     buff = new audioBuffer(512*currentlyPlayingInfo.blockAlign);
 
     if (outStream->init(currentlyPlayingInfo, name, fileName)){
-        std::cerr << "ERR: openning stream" << std::endl;
+        fprintf(stderr , "ERR: openning stream\n");
         return -1;
     }
 
@@ -40,6 +33,11 @@ char SoundStream::init(const std::string& fileName){
 }
 
 void SoundStream::play(){
+    if (!buff){
+        printf("nothing to play\n");
+        return;
+    }
+
     if (playing == false){
         playing = true;
         audioThread = new std::thread(&SoundStream::audioThreadF, this);
@@ -60,6 +58,10 @@ void SoundStream::stop(){
         delete audioThread;
         audioThread = nullptr;
     }
+    if (buff){
+        delete buff;
+        buff = nullptr;
+    }
     fileHandler->closeAudio();
 }
 
@@ -70,13 +72,11 @@ void SoundStream::audioThreadF(){
         }
         bytesRead += buff->count;
         if (outStream->playBuffer(buff)){
-            std::cerr << "ERR: playing" << std::endl;
+            fprintf(stderr ,"ERR: playing\n");
             break;
         }
     }
-    if (playing){
-        stop();
-    }
+    playing = false;
 }
 
 bool SoundStream::isPlaying(){
@@ -84,11 +84,23 @@ bool SoundStream::isPlaying(){
 }
 
 void SoundStream::printCurrentlyPlayingInfo(){
-    currentlyPlayingInfo.print();
+    if (buff){
+        currentlyPlayingInfo.print();
+    } else {
+        printf("nothing to show\n");
+    }
 }
 std::string SoundStream::fileLength(){
-    return audioFileInfo::secondsToString(currentlyPlayingInfo.length());
+    if (buff){
+        return audioFileInfo::secondsToString(currentlyPlayingInfo.length());
+    } else {
+        return "00:00";
+    }
 }
 std::string SoundStream::timeElapsed(){
-    return audioFileInfo::secondsToString(currentlyPlayingInfo.timeElapsed(bytesRead));
+    if (buff){
+        return audioFileInfo::secondsToString(currentlyPlayingInfo.timeElapsed(bytesRead));
+    } else {
+        return "00:00";
+    }
 }

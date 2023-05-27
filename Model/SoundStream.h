@@ -33,7 +33,7 @@ private:
     bool playing;
     audioFileInfo currentlyPlayingInfo;
     unsigned long bytesRead;
-    audioBuffer* buff;
+    audioBuffer* buff; // if nullptr then nothing is initialized and ready to play
     void audioThreadF();
 };
 
