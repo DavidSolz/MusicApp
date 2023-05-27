@@ -13,6 +13,9 @@ SoundStream::~SoundStream(){
     stop();
     delete outStream;
     delete fileHandler;
+    if (audioThread){
+        delete audioThread;
+    }
 }
 
 char SoundStream::init(const std::string& fileName){
@@ -40,6 +43,9 @@ void SoundStream::play(){
 
     if (playing == false){
         playing = true;
+        if (audioThread){
+            delete audioThread;
+        }
         audioThread = new std::thread(&SoundStream::audioThreadF, this);
     }
 }
@@ -52,12 +58,8 @@ void SoundStream::pause(){
 }
 
 void SoundStream::stop(){
-    bytesRead = 0;
     pause();
-    if (audioThread){
-        delete audioThread;
-        audioThread = nullptr;
-    }
+    bytesRead = 0;
     if (buff){
         delete buff;
         buff = nullptr;
@@ -77,10 +79,14 @@ void SoundStream::audioThreadF(){
         }
     }
     if (playing){
-        fileHandler->closeAudio();
         playing = false;
+        bytesRead = 0;
+        if (buff){
+            delete buff;
+            buff = nullptr;
+        }
+        fileHandler->closeAudio();
     }
-
 }
 
 bool SoundStream::isPlaying(){
