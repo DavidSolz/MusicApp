@@ -25,7 +25,7 @@ char SoundStream::init(const std::string& fileName){
         return -1;
     }
 
-    buff = new audioBuffer(512*currentlyPlayingInfo.blockAlign);
+    buff = new audioBuffer(256*currentlyPlayingInfo.blockAlign);
 
     if (outStream->init(currentlyPlayingInfo, name, fileName)){
         fprintf(stderr , "ERR: openning stream\n");
@@ -65,6 +65,55 @@ void SoundStream::stop(){
         buff = nullptr;
     }
     fileHandler->closeAudio();
+}
+
+void SoundStream::skipSeconds(const int& seconds){
+    if (buff){
+        uint32_t currnetBytesRead = bytesRead;
+        long int bytesToMove = seconds * int(currentlyPlayingInfo.byteRate);
+        bytesToMove -= bytesToMove % currentlyPlayingInfo.blockAlign;
+        if (bytesToMove < 0){
+            if (currnetBytesRead < -bytesToMove){
+                currnetBytesRead = 0;
+            } else {
+                currnetBytesRead += bytesToMove;
+            }
+        } else {
+            if (currnetBytesRead + bytesToMove > currentlyPlayingInfo.fileLength){
+                stop();
+                return;
+            } else {
+                currnetBytesRead += bytesToMove;
+            }
+        }
+
+        bool wasPlaying = playing;
+        pause();
+        bytesRead = currnetBytesRead;
+        fileHandler->moveTo(currnetBytesRead);
+        if (wasPlaying){
+            play();
+        }
+    }
+}
+
+void SoundStream::jumpTo(const unsigned int& minutes, unsigned int seconds){
+    if (buff){
+        seconds += minutes*60;
+        long int bytesToMove = seconds * int(currentlyPlayingInfo.byteRate);
+        bytesToMove -= bytesToMove % currentlyPlayingInfo.blockAlign;
+        if (bytesToMove > currentlyPlayingInfo.fileLength){
+            stop();
+            return;
+        }
+        bytesRead = bytesToMove;
+        bool wasPlaying = playing;
+        pause();
+        fileHandler->moveTo(bytesToMove);
+        if (wasPlaying){
+            play();
+        }
+    }
 }
 
 void SoundStream::audioThreadF(){

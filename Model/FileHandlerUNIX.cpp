@@ -1,5 +1,6 @@
 #include "FileHandlerUNIX.h"
 #include <iostream>
+#include <ostream>
 
 uint64_t convert(const uint8_t data[], uint bytes){
     uint64_t out = 0;
@@ -42,6 +43,7 @@ char FileHandlerUNIX::openAudioWav(const std::string& fileName, audioFileInfo& i
     }
 
     audioFile.read((char*)subchunk2Size, 4);
+    audioDataSegment = audioFile.tellp();
 
     info.type = "wave";
     info.sampleRate = convert(sampleRate, 4);
@@ -71,4 +73,9 @@ void FileHandlerUNIX::closeAudio(){
     if (audioFile.is_open()){
         audioFile.close();
     }
+}
+
+void FileHandlerUNIX::moveTo(const uint32_t& samples){
+    audioFile.seekp(audioDataSegment, std::ios_base::beg);
+    audioFile.seekp(samples, std::ios_base::cur);
 }

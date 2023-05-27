@@ -26,6 +26,9 @@ public:
     std::string fileLength();
     std::string timeElapsed();
 
+    void skipSeconds(const int& seconds);
+    void jumpTo(const unsigned int& min, unsigned int sec);
+
 private:
     AudioEffectPipeline* pipeline;
     const std::string name;
@@ -34,7 +37,7 @@ private:
     IFileHandler* fileHandler;
     bool playing;
     audioFileInfo currentlyPlayingInfo;
-    unsigned long bytesRead;
+    uint32_t bytesRead;
     audioBuffer* buff; // if nullptr then nothing is initialized and ready to play
     void audioThreadF();
 };
