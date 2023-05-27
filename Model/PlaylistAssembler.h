@@ -4,6 +4,8 @@
 #include<stack>
 #include<vector>
 #include<iostream>
+#include<algorithm>
+#include "Playlist.h"
 #pragma once
 
 class PlaylistAssembler{

@@ -19,13 +19,6 @@ int main(int argc, char* argv[]){
     
     std::vector<std::string> selectedFiles = assembler.FileExplorer();
     
-
-    std::cout<<"=====================\n";
-    for(const auto &f : selectedFiles){
-        std::cout<<f<<"\n";
-    }
-    std::cout<<"=====================\n";
-
     delete c;
     delete p;
 

@@ -21,22 +21,24 @@ void PlaylistAssembler::ExploreDirectory(const std::string& path, const std::vec
     std::cout<<"==========Commands==========\n";
     std::cout<<"mark filename \n";
     std::cout<<"cd [directory/..]\n";
-    std::cout<<"============================\n";
+    std::cout<<"done \n";
+    std::cout<<"============================\n\n";
+
+    std::cout << "Current Directory: " << path << std::endl;
     for (const auto& entry : fs::directory_iterator(path)) {
         const auto& entryPath = entry.path();
         std::string fileName = entryPath.filename().string();
 
         if(fileName[0]=='.')continue;
 
-        std::string relativePath = GetRelativePath(path, entryPath);
-
-
         if(fs::is_directory(entryPath)){
             std::cout<<"[D] ";
         }else{
 
-            if(std::find(selected.begin(),selected.end(), relativePath)!=selected.end()){
-                std::cout<<"[X] ";
+            auto it = std::find(selected.begin(),selected.end(), entryPath.string());
+
+            if(it!=selected.end()){
+                std::cout<<"[x] ";
             }else{
                 std::cout<<"[F] ";
             }
@@ -44,14 +46,24 @@ void PlaylistAssembler::ExploreDirectory(const std::string& path, const std::vec
         }
         std::cout << fileName << std::endl;
     }
+
+    std::cout<<"\n==========Selected==========\n";
+    for(const auto &filePath : selected){
+        std::cout<<filePath<<"\n";
+    }
+    std::cout<<"============================\n";
+
 }
 
 std::vector<std::string> PlaylistAssembler::FileExplorer(){
     std::stack<std::string> previousDirs;
     std::vector<std::string> selectedFiles;
+    std::string filePath;
+
+    ClearTerminal();
 
     while (true) {
-        std::cout << "Current Directory: " << directoryPath << std::endl;
+        
         ExploreDirectory(directoryPath, selectedFiles);
 
         std::string param;
@@ -64,21 +76,25 @@ std::vector<std::string> PlaylistAssembler::FileExplorer(){
 
             if(fs::is_directory(param)){
                 ClearTerminal();
-                std::cerr<<"Cannot mark whole directory. Press any key to continue...\n";
-                getchar();
+                std::cerr<<"Cannot mark whole directory\n";
                 continue;
             }
 
-            const std::string filePath = fs::canonical(fs::path(directoryPath) / param).string();
-            std::string relativePath = GetRelativePath(directoryPath,filePath);
 
-            auto it = std::find(selectedFiles.begin(), selectedFiles.end(), relativePath);
+            try{
+                filePath = fs::canonical(fs::path(directoryPath) / param).string();
+            }catch(const std::exception& e){
+                ClearTerminal();
+                std::cout<<"No such file or directory\n";
+                continue;
+            }
+            
+
+            auto it = std::find(selectedFiles.begin(), selectedFiles.end(), filePath);
             if (it != selectedFiles.end()) {
                 selectedFiles.erase(it);
-                std::cout << "File unmarked: " << relativePath << std::endl;
             } else {
-                selectedFiles.push_back(relativePath);
-                std::cout << "File marked: " << relativePath << std::endl;
+                selectedFiles.push_back(filePath);
             }
 
 
@@ -89,7 +105,6 @@ std::vector<std::string> PlaylistAssembler::FileExplorer(){
         }else{
             ClearTerminal();
             std::cerr<<"Invalid command\n";
-            getchar();
             continue;
         }
 
@@ -97,6 +112,8 @@ std::vector<std::string> PlaylistAssembler::FileExplorer(){
             if (!previousDirs.empty()) {
                 directoryPath = previousDirs.top();
                 previousDirs.pop();
+            }else{
+                std::cout<<"Already in home directory\n";
             } 
         } else {
             fs::path newPath = fs::canonical(fs::path(directoryPath) / param);
@@ -109,7 +126,7 @@ std::vector<std::string> PlaylistAssembler::FileExplorer(){
         ClearTerminal();
     }
 
-    std::cout<<"Playlist stored succesfully\n";
+    std::cout<<"Files stored succesfully\n";
 
     return selectedFiles;
 }

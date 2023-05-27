@@ -1,7 +1,7 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 #include "SoundStream.h"
-#include "Playlist.h"
+#include "PlaylistAssembler.h"
 #include<iostream>
 #include<list>
 
