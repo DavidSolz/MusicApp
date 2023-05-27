@@ -1,5 +1,4 @@
 #include "Commander.h"
-#include "ICommand.h"
 
 Commander::Commander(const Player *player){
     this->player=(Player*)player;
@@ -14,24 +13,25 @@ void Commander::AddCommand(const std::string &commandName, const ICommand *comma
         return;
     }
 
-    commands[commandName] = (ICommand*)&command;
+    commands[commandName] = (ICommand*)command;
 
 }
 
-void Commander::SetCommand(const std::string &command) {
+bool Commander::SetCommand(const std::string &command) {
     try
     {
-        ICommand *temp = commands.at(command);
-        if(temp==NULL){
-            std::cerr<<"Unknown command.\n";
-            return;
-        }
-        this->command = temp;
+        ICommand *tempC = commands.at(command); 
+
+
+        this->command = tempC;
+        return true;
     }
     catch(const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
+        std::cerr << "Unknown command\n";;
     }
+
+    return false;
 }
 
 void Commander::DumpToFile(const std::string &filename){
@@ -42,11 +42,6 @@ void Commander::ReadFromFile(const std::string &filename){
     //TODO
 }
 
-
-void Commander::SetCommand(const ICommand *command) {
-    this->command = (ICommand*)command;
-}
-
 void Commander::ExecuteCommand() {
 
     if(command==NULL){
@@ -55,5 +50,20 @@ void Commander::ExecuteCommand() {
     }
 
     command->Process(player);
+
+}
+
+void Commander::ExecuteCommand(const std::string &command) {
+
+    if(SetCommand(command)==false){ 
+        return;
+    }
+    ExecuteCommand();
+}
+
+void Commander::ExecuteCommand(const ICommand *command) {
+
+    this->command=(ICommand*)command;
+    ExecuteCommand();
 
 }

@@ -1,8 +1,3 @@
-/**
- * Project Untitled
- */
-
-
 #ifndef _STOPCOMMAND_H
 #define _STOPCOMMAND_H
 
@@ -10,6 +5,9 @@
 
 
 class StopCommand: public ICommand {
+
+void Process(const Player *player);
+
 };
 
 #endif //_STOPCOMMAND_H
