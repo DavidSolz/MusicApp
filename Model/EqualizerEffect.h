@@ -1,18 +1,19 @@
-#ifndef _VOLUMEEFFECT_H
-#define _VOLUMEEFFECT_H
+#ifndef _EQUALIZER_H
+#define _EQUALIZER_H
 
 #include "IAudioEffect.h"
 
-class VolumeEffect: public IAudioEffect{
+class EqualizerEffect: public IAudioEffect{
 public:
-    VolumeEffect();
-    ~VolumeEffect();
+    EqualizerEffect();
+    ~EqualizerEffect();
     void apply(audioBuffer* buff, const audioFileInfo& info);
     void set(float* settings);
     void getSetting(float* settings);
     std::string getName();
 private:
-    float volume;
+    float* eqValues;
+    float* eqFreq;
+    uint eqBands;
 };
-
 #endif

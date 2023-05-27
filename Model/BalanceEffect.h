@@ -1,23 +1,18 @@
-/**
- * Project Untitled
- */
-
-
 #ifndef _BALANCEEFFECT_H
 #define _BALANCEEFFECT_H
 
-#include "AudioEffect.h"
-#include<string>
-#pragma once
+#include "IAudioEffect.h"
 
-class BalanceEffect: public AudioEffect {
-public: 
-    
-void Compute();
-    
-std::string GetInfo();
-private: 
+class BalanceEffect: public IAudioEffect{
+public:
+    BalanceEffect();
+    ~BalanceEffect();
+    void apply(audioBuffer* buff, const audioFileInfo& info);
+    void set(float* settings);
+    void getSetting(float* settings);
+    std::string getName();
+private:
     float balance;
 };
 
-#endif //_BALANCEEFFECT_H
+#endif

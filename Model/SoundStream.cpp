@@ -1,6 +1,6 @@
 #include "SoundStream.h"
 
-SoundStream::SoundStream(std::string name):name(name){
+SoundStream::SoundStream(std::string name, AudioEffectPipeline* pipeline):name(name), pipeline(pipeline){
     playing = false;
     outStream = new OutStreamPulseAudio();
     fileHandler = new FileHandlerUNIX();
@@ -73,6 +73,9 @@ void SoundStream::audioThreadF(){
             break;
         }
         bytesRead += buff->count;
+
+        pipeline->apply(buff, currentlyPlayingInfo);
+
         if (outStream->playBuffer(buff)){
             fprintf(stderr ,"ERR: playing\n");
             break;

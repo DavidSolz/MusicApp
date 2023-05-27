@@ -4,6 +4,7 @@
 #include <iostream>
 #include <thread>
 
+#include "AudioEffectPipeline.h"
 #include "IFileHandler.h"
 #include "IOutStream.h"
 
@@ -13,7 +14,7 @@
 
 class SoundStream{
 public:
-    SoundStream(std::string name);
+    SoundStream(std::string name, AudioEffectPipeline* pipeline);
     ~SoundStream();
     char init(const std::string& fileName);
     void play();
@@ -26,6 +27,7 @@ public:
     std::string timeElapsed();
 
 private:
+    AudioEffectPipeline* pipeline;
     const std::string name;
     std::thread* audioThread;
     IOutStream* outStream;
