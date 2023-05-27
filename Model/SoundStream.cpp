@@ -76,7 +76,11 @@ void SoundStream::audioThreadF(){
             break;
         }
     }
-    playing = false;
+    if (playing){
+        fileHandler->closeAudio();
+        playing = false;
+    }
+
 }
 
 bool SoundStream::isPlaying(){
