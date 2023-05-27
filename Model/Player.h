@@ -8,16 +8,15 @@
 #pragma once
 class Player {
 public: 
-    Player(const std::string &streamName);
-    void Play();
-    void Stop();
-    void PlayNext();
-    void PlayPrevious();
-    SoundStream *GetStream();
-    ~Player();
 
-    void AddTrack(const track *_track, Playlist *playlist);  
-    void RemoveTrack(const track *_track, Playlist *playlist);
+
+    Player(const std::string &streamName);
+    void CreatePlaylist();
+    void EditPlaylist();
+    void ShowPlaylists();
+    Playlist* GetQueue();
+    SoundStream* GetStream();
+    ~Player();
 
 private: 
     SoundStream* soundStream;

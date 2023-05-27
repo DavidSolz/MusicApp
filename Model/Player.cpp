@@ -16,26 +16,22 @@ SoundStream * Player::GetStream(){
     return soundStream;
 }
 
-void Player::AddTrack(const track *_track, Playlist *playlist) {
-    try
-    {
-        playlist->AddTrack((track *)_track);
+Playlist* Player::GetQueue(){
+    if(queue==NULL){
+        queue= new Playlist();
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    
+
+    return queue;
 }
 
-void Player::RemoveTrack(const track *_track, Playlist *playlist) {
-    try
-    {
-        playlist->RemoveTrack((track *)_track);
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    
+void Player::CreatePlaylist(){
+
+}
+
+void Player::EditPlaylist(){
+
+}
+
+void Player::ShowPlaylists(){
+
 }

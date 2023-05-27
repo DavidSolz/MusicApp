@@ -1,6 +1,6 @@
-#include "PlayCommand.h"
+#include "PreviousCommand.h"
 
-void PlayCommand::Process(const Player *player){
+void PreviousCommand::Process(const Player *player){
     SoundStream* stream = ((Player*)player)->GetStream();
 
     if(stream->isPlaying()==true){
@@ -9,11 +9,7 @@ void PlayCommand::Process(const Player *player){
 
     Playlist *queue = ((Player*)player)->GetQueue();
 
-    if(!queue->haveNext()){
-        queue->Reset();
-    }
-
-    track *t = queue->Next();
+    track *t = queue->Previous();
 
     if( t==NULL){
        std::cerr<<"Queue is empty\n";

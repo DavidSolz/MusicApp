@@ -5,26 +5,24 @@
 #include<vector>
 #include<string>
 #include "track.h"
-
+#include<iostream>
 #pragma once
+
 class Playlist {
 public: 
 
-/**
- * @param track
- */
-void AddTrack(const track *_track);
-    
-/**
- * @param track
- */
-void RemoveTrack(const track *_track);
+void Edit();
 
-/**
- * @param track
- * @param offset
- */
-void MoveTrack(const track *_track,const int &offset);
+bool haveNext();
+
+bool havePrevious();
+
+track* Previous();
+
+track* Next();
+
+void Reset();
+
 private: 
     std::vector<track*> tracks;
     int index;

@@ -1,25 +1,35 @@
 
 #include "Playlist.h"
-#include<iostream>
 
-void Playlist::AddTrack(const track *_track) {
-    tracks.push_back((track*)_track);
+
+void Playlist::Edit(){
+
 }
 
-void Playlist::RemoveTrack(const track *_track) {
-    tracks.erase(std::remove(tracks.begin(), tracks.end(), _track), tracks.end());
+bool Playlist::havePrevious(){
+    return index>0;
 }
 
-void Playlist::MoveTrack(const track *_track, const int &offset) {
-
-    auto it = std::find(tracks.begin(), tracks.end(), _track);
-
-    if(it==tracks.end()){
-        std::cerr<<"Element not found\n";
-        return;
+track* Playlist::Previous(){
+    if(havePrevious()){
+        return tracks[index--];
+    }else{
+        return NULL;
     }
+}
 
-    std::rotate(it,it+offset,tracks.end());
+bool Playlist::haveNext(){
+    return index < tracks.size();
+}
 
+track* Playlist::Next(){
+    if(haveNext()){
+        return tracks[index++];
+    }else{
+        return NULL;
+    }
+}
 
+void Playlist::Reset(){
+    index=0;
 }

@@ -55,9 +55,8 @@ void PlaylistAssembler::ExploreDirectory(const std::string& path, const std::vec
 
 }
 
-std::vector<std::string> PlaylistAssembler::FileExplorer(){
+void PlaylistAssembler::FileExplorer(std::vector<std::string> &selectedFiles){
     std::stack<std::string> previousDirs;
-    std::vector<std::string> selectedFiles;
     std::string filePath;
 
     ClearTerminal();
@@ -85,7 +84,7 @@ std::vector<std::string> PlaylistAssembler::FileExplorer(){
                 filePath = fs::canonical(fs::path(directoryPath) / param).string();
             }catch(const std::exception& e){
                 ClearTerminal();
-                std::cout<<"No such file or directory\n";
+                std::cerr<<"No such file or directory\n";
                 continue;
             }
             
@@ -113,7 +112,7 @@ std::vector<std::string> PlaylistAssembler::FileExplorer(){
                 directoryPath = previousDirs.top();
                 previousDirs.pop();
             }else{
-                std::cout<<"Already in home directory\n";
+                std::cerr<<"Already in home directory\n";
             } 
         } else {
             fs::path newPath = fs::canonical(fs::path(directoryPath) / param);
@@ -128,5 +127,4 @@ std::vector<std::string> PlaylistAssembler::FileExplorer(){
 
     std::cout<<"Files stored succesfully\n";
 
-    return selectedFiles;
 }
