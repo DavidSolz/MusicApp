@@ -11,6 +11,8 @@ public:
 
 void ClearTerminal();
 
+std::string GetRelativePath(const std::string& basePath, const std::string& fullPath);
+
 void ExploreDirectory(const std::string& path, const std::vector<std::string> selected);
 
 std::vector<std::string> FileExplorer();

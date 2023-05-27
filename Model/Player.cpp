@@ -4,7 +4,7 @@
 
 Player::Player(const std::string &streamName){
     queue = new Playlist();
-    soundStream = new SoundStream(streamName);
+    soundStream = new SoundStream(streamName, new AudioEffectPipeline());
 }
 
 Player::~Player(){
