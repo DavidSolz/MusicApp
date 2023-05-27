@@ -73,6 +73,9 @@
         "deque": "cpp",
         "fstream": "cpp",
         "iomanip": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "*.ds_store": "cpp",
+        "filesystem": "cpp",
+        "unordered_set": "cpp"
     }
 }

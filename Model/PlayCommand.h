@@ -1,8 +1,3 @@
-/**
- * Project Untitled
- */
-
-
 #ifndef _PLAYCOMMAND_H
 #define _PLAYCOMMAND_H
 
@@ -11,9 +6,7 @@
 
 class PlayCommand: public ICommand {
 
-void Process(const Player *player){
-    std::cout<<"Playing\n";
-}
+void Process(const Player *player);
 
 };
 

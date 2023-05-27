@@ -19,16 +19,6 @@ Commander(const Player *player);
 void AddCommand(const std::string &commandName, const ICommand *command);
 
 /**
- * @param command
- */
-void SetCommand(const ICommand *command);
-
-/**
- * @param command
- */
-void SetCommand(const std::string &command);
-
-/**
  * @param filename  
 */
 void DumpToFile(const std::string &filename);
@@ -38,10 +28,19 @@ void DumpToFile(const std::string &filename);
 */
 void ReadFromFile(const std::string &filename);
 
-
 void ExecuteCommand();
 
+void ExecuteCommand(const std::string &command);
+
+void ExecuteCommand(const ICommand *command);
+
 private: 
+
+/**
+ * @param command
+ */
+bool SetCommand(const std::string &command);
+
     ICommand *command;
     Player *player;
     std::map<std::string, ICommand*> commands;

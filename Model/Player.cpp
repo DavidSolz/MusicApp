@@ -1,40 +1,22 @@
 
 #include "Player.h"
 
-/**
- * @return char
- */
-char Player::PlayNext() {
-    return '0';
+
+Player::Player(const std::string &streamName){
+    queue = new Playlist();
+    soundStream = new SoundStream(streamName);
 }
 
-/**
- * @return char
- */
-char Player::PlayPrevious() {
-    return '0';
+Player::~Player(){
+    delete queue;
+    delete soundStream;
 }
 
-/**
- * @return char
- */
-char Player::Play() {
-    return '0';
+SoundStream * Player::GetStream(){
+    return soundStream;
 }
 
-/**
- * @return char
- */
-char Player::Stop() {
-    return '0';
-}
-
-/**
- * @param track
- * @param playlist
- * @return char
- */
-char Player::AddTrack(const track *_track, Playlist *playlist) {
+void Player::AddTrack(const track *_track, Playlist *playlist) {
     try
     {
         playlist->AddTrack((track *)_track);
@@ -46,12 +28,7 @@ char Player::AddTrack(const track *_track, Playlist *playlist) {
     
 }
 
-/**
- * @param track
- * @param playlist
- * @return char
- */
-char Player::RemoveTrack(const track *_track, Playlist *playlist) {
+void Player::RemoveTrack(const track *_track, Playlist *playlist) {
     try
     {
         playlist->RemoveTrack((track *)_track);
