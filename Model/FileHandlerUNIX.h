@@ -9,7 +9,7 @@ public:
     char openAudioWav(const std::string& fileName, audioFileInfo& info);
     char readAudio(audioBuffer* buffer);
     void closeAudio();
-    void moveTo(const uint32_t& samples);
+    void moveTo(const uint32_t& sample);
 private:
     std::fstream audioFile;
     std::streampos audioDataSegment;

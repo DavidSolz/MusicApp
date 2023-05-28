@@ -16,7 +16,7 @@ public:
     void getEffectSettings(std::string effectId, float* settings);
 private:
     IAudioEffect** effects;
-    const uint effectCount;
+    const unsigned int effectCount;
 };
 
 #endif

@@ -27,18 +27,19 @@ public:
     std::string timeElapsed();
 
     void skipSeconds(const int& seconds);
-    void jumpTo(const unsigned int& min, unsigned int sec);
+    void jumpTo(const unsigned int& minutes, unsigned int seconds);
 
 private:
-    AudioEffectPipeline* pipeline;
     const std::string name;
-    std::thread* audioThread;
+    AudioEffectPipeline* pipeline;
     IOutStream* outStream;
     IFileHandler* fileHandler;
+    std::thread* audioThread;
     bool playing;
     audioFileInfo currentlyPlayingInfo;
-    uint32_t bytesRead;
     audioBuffer* buff; // if nullptr then nothing is initialized and ready to play
+    uint32_t bytesRead;
+
     void audioThreadF();
 };
 
