@@ -3,25 +3,26 @@
 #include<stack>
 #include<list>
 #include "MenuView.h"
-
-typedef std::pair<std::string, View*> State;
+#include "../Player.h"
 
 class ViewController {
 public:
 
-ViewController();
-
-void RegisterView(const std::string &name, const View &view);
+ViewController(const Player * player);
 
 View* GetCurrentView();
 
+void Render();
 
+void disableInputBuffering();
+
+void enableInputBuffering();
 
 private:
 
 std::stack<View*> views;
-std::list<State*> states;
-
+View *menu;
+Player *player;
 
 };
 
