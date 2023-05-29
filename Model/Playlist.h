@@ -11,13 +11,17 @@
 class Playlist {
 public: 
 
-void Edit();
+Playlist(const std::string &name);
 
 bool haveNext();
 
 bool havePrevious();
 
 void Add(const track* _track);
+
+std::string GetPlaylistName();
+
+std::string GetCurrentName();
 
 track* Previous();
 

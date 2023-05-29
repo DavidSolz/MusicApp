@@ -3,8 +3,10 @@
 
 
 Player::Player(const std::string &streamName, const AudioEffectPipeline * pipeline){
-    queue = new Playlist();
     soundStream = new SoundStream(streamName, (AudioEffectPipeline*)pipeline);
+
+    playlists.push_back(new Playlist("Test1"));
+    playlists.push_back(new Playlist("Test2"));
 }
 
 Player::~Player(){
@@ -12,6 +14,10 @@ Player::~Player(){
     delete assembler;
     delete queue;
     delete soundStream;
+}
+
+std::vector<Playlist*> &Player::GetList(){
+    return playlists;
 }
 
 SoundStream * Player::GetStream(){
@@ -27,20 +33,8 @@ PlaylistAssembler* Player::GetAssembler(){
 
 Playlist* Player::GetQueue(){
     if(queue==NULL){
-        queue = new Playlist();
+        queue = new Playlist("Queue");
     }
 
     return queue;
-}
-
-void Player::CreatePlaylist(){
-
-}
-
-void Player::EditPlaylist(){
-
-}
-
-void Player::ShowPlaylists(){
-
 }

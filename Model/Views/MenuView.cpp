@@ -1,14 +1,15 @@
 #include "MenuView.h"
 
 
-MenuView::MenuView() : View(
+MenuView::MenuView(const Player *player) : View(
     "MenuView",
     "Use arrow keys to select an item\nTo accept your selection press Enter"){
-    this->optionCount=3;
+    this->optionCount=4;
     menuItems = new Item<View*>[optionCount];
-    menuItems[0] = Item<View*>("Player",new PlayerView());
-    menuItems[1] = Item<View*>("Options",new OptionView());
-    menuItems[2] = Item<View*>("Exit", NULL);
+    menuItems[0] = Item<View*>("Player",new PlayerView(player));
+    menuItems[1] = Item<View*>("Playlists",new PlaylistView(player));
+    menuItems[2] = Item<View*>("Options",new OptionView());
+    menuItems[3] = Item<View*>("Exit", NULL);
 }
 
 void MenuView::Render(){

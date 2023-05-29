@@ -1,8 +1,8 @@
 #include "ViewController.h"
 
 ViewController::ViewController(const Player *player){
-    this->player = (Player*)player;
-    menu = new MenuView();
+    this->player = (Player*)player; //TODO
+    menu = new MenuView(player);
     views.push(menu);
 }
 

@@ -43,6 +43,8 @@ char View::GetChar() {
 
 void View::PrintHeader(){
 
+    
+    
     for(int i=0; i<w.ws_col;i++){
         printf("=");
     }

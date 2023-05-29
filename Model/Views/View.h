@@ -24,11 +24,11 @@ public:
 
     void SetNextView(const View* view);
 
-    char GetChar();
-
     View* GetNextState();
 
 protected:
+
+char GetChar();
 
 View *nextState;
 std::string headerLine;

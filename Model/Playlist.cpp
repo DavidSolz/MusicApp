@@ -1,10 +1,10 @@
 
 #include "Playlist.h"
 
-
-void Playlist::Edit(){
-
+Playlist::Playlist(const std::string &name){
+    this->name=name;
 }
+
 
 bool Playlist::havePrevious(){
     return index>1 && tracks.size()>0;
@@ -19,6 +19,17 @@ track* Playlist::Previous(){
     }else{
         return NULL;
     }
+}
+
+std::string Playlist::GetPlaylistName(){
+    return name;
+}
+
+std::string Playlist::GetCurrentName(){
+    if(tracks.size()>0){
+        return tracks[index]->GetName();
+    }
+    return "Queue is empty";
 }
 
 void Playlist::Add(const track* _track){
