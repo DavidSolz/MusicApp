@@ -11,6 +11,9 @@ public:
 
 
     Player(const std::string &streamName, const AudioEffectPipeline * pipeline);
+    void Play();
+    void Pause();
+    void Stop();
     Playlist* GetQueue();
     std::vector<Playlist*> &GetList();
     PlaylistAssembler* GetAssembler();

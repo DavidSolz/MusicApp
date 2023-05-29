@@ -21,13 +21,17 @@ track* Playlist::Previous(){
     }
 }
 
+std::vector<track*> &Playlist::GetTracks(){
+    return tracks;
+}
+
 std::string Playlist::GetPlaylistName(){
     return name;
 }
 
 std::string Playlist::GetCurrentName(){
     if(tracks.size()>0){
-        return tracks[index]->GetName();
+        return tracks[index-1]->GetName();
     }
     return "Queue is empty";
 }

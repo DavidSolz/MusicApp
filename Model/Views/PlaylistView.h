@@ -13,6 +13,8 @@ PlaylistView(const Player *player);
 
 void Render();
     
+void EnqueuePlaylist(const Playlist *playlist);
+
 private:
 
 Player *player;

@@ -21,6 +21,8 @@ void Add(const track* _track);
 
 std::string GetPlaylistName();
 
+std::vector<track*> &GetTracks();
+
 std::string GetCurrentName();
 
 track* Previous();

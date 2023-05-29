@@ -4,10 +4,24 @@
 
 PlaylistView::PlaylistView(const Player *player) : View(
     "PlaylistView",
-    "Press Esc to return to MenuView\nUse arrow keys to select an item\nPress E to enter playlist editor\nPress A to add new playlist"
+    "Press Esc to return to MenuView\n"
+    "Use arrow keys to select an item\n"
+    "Press E to enter playlist editor\n"
+    "Press A to add new playlist\n"
+    "Press I to enqueue playlist"
     ){
     this->player=((Player*) player);
     
+}
+
+void PlaylistView::EnqueuePlaylist(const Playlist *playlist){
+
+    Playlist *queue = player->GetQueue();
+
+    for(const auto &element : ((Playlist*)playlist)->GetTracks()){
+        queue->Add(element);
+    }
+
 }
 
 void PlaylistView::Render(){
@@ -47,12 +61,15 @@ void PlaylistView::Render(){
                     default:
                         break;
                 }
-            } else { //ESC
+            } else { 
                 SetNextView(this);
                 break;
             }
-    } else if (key == '\n') {
-
+    }else if(key=='i'){
+        EnqueuePlaylist(items[selected]);
+    }else if (key == '\n') {
+        //PlaylistEditor
+        break;
     }
 
     

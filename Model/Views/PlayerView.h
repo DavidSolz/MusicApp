@@ -11,11 +11,13 @@ public:
 
 PlayerView(const Player *player);
 
+void QueuePrint(const Playlist* queue);
+
 void Render();
     
 private:
 
-static void Update(const Player *player, const View *view);
+static void Update(const SoundStream *stream);
 
 Player * player;
  
