@@ -3,8 +3,15 @@
 #include "PlayCommand.h"
 #include "PauseCommand.h"
 #include "StopCommand.h"
+#include "EditCommand.h"
 #include "NextCommand.h"
+#include "HelpCommand.h"
 #include "PreviousCommand.h"
+#include <cstring>
+
+#include "ViewController.h"
+
+#pragma once
 
 void HandleCommands(const Commander *commander);
 
@@ -12,9 +19,13 @@ void RegisterCommands(Commander *commander);
 
 int main(int argc, char* argv[]){
 
-    Player *player = new Player(argv[0]);
+    AudioEffectPipeline * pipeline = new AudioEffectPipeline();
+
+    Player *player = new Player(argv[0],pipeline);
 
     Commander *commander = new Commander(player);
+
+    ViewController *controller = new ViewController();
 
     RegisterCommands(commander);
 
@@ -24,19 +35,22 @@ int main(int argc, char* argv[]){
         system("clear");
     #endif
 
-    std::thread *commandHandler = new std::thread(HandleCommands,commander);
+    std::thread *commandThread = new std::thread(HandleCommands,commander);
 
-    //TODO
-    std::cout<<"Player loop\n";
-    //
+    Playlist* queue = player->GetQueue();
+    track *t = new track("Sample","/Users/solz/Desktop/MusicApp/Out/Sample.wav");
+    queue->Add(t);
 
-    commandHandler->join();
 
-    std::cout << "\033[" << 24 << ";1H\033[K"; //Clears line
-    std::cout<<"Have a nice day !\n";
+
+    commandThread->join();
+
+
+    printf("Have a nice day !    \n");
 
     delete commander;
-    delete player;
+    //delete player;
+    //delete pipeline;
 
     return 0;
 }
@@ -44,11 +58,14 @@ int main(int argc, char* argv[]){
 void HandleCommands(const Commander *commander){
     std::string command;
     while(true){
+        
         std::cout << "\033[" << 23 << ";" << 0 << "H"; //Sets cursor position
         std::cout << "\033[" << 23 << ";1H\033[K"; //Clears line
         std::cout<<"> ";
         std::cin>>command;
-        if(command=="Exit" || command=="exit"){
+        std::transform(command.begin(), command.end(), command.begin(), [](unsigned char c){ return std::tolower(c); });
+        if(command=="exit"){
+            ((Commander *)commander)->ExecuteCommand("Stop");
             break;
         }
         ((Commander*)commander)->ExecuteCommand(command);
@@ -57,14 +74,11 @@ void HandleCommands(const Commander *commander){
 
 void RegisterCommands(Commander *commander){
 
-    commander->AddCommand("Play", new PlayCommand());
+    commander->AddCommand("help", new HelpCommand());
+    commander->AddCommand("edit", new EditCommand());
     commander->AddCommand("play", new PlayCommand());
-    commander->AddCommand("Pause",new PauseCommand());
     commander->AddCommand("pause",new PauseCommand());
-    commander->AddCommand("Previous", new PreviousCommand());
     commander->AddCommand("previous", new PreviousCommand());
-    commander->AddCommand("Next", new NextCommand());
     commander->AddCommand("next", new NextCommand());
-    commander->AddCommand("Stop", new StopCommand());
     commander->AddCommand("stop", new StopCommand());
 }

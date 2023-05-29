@@ -1,7 +1,8 @@
 #include "HelpCommand.h"
 
 
-void Process(const Player* player){
+
+void HelpCommand::Process(const Player* player){
 
     //TODO
 

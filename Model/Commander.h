@@ -12,10 +12,6 @@ public:
     
 Commander(const Player *player);
 
-/**
- * @param commandName
- * @param command
-*/
 void AddCommand(const std::string &commandName, const ICommand *command);
 
 /**

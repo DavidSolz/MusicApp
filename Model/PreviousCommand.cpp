@@ -3,19 +3,20 @@
 void PreviousCommand::Process(const Player *player){
     SoundStream* stream = ((Player*)player)->GetStream();
 
-    if(stream->isPlaying()==true){
-        stream->stop();
-    }
-
     Playlist *queue = ((Player*)player)->GetQueue();
 
     track *t = queue->Previous();
 
-    if( t==NULL){
-       std::cerr<<"Queue is empty\n";
-       return; 
+    if(t==NULL){
+        printf("No previous songs      \n");
+        return; 
     }
 
+    if(stream->isPlaying()==true){
+        stream->stop(); 
+    }
+
+   
     stream->init(t->GetPath()); //TODO
     stream->play();
 

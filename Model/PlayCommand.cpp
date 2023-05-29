@@ -16,7 +16,7 @@ void PlayCommand::Process(const Player *player){
     track *t = queue->Next();
 
     if( t==NULL){
-       std::cerr<<"Queue is empty\n";
+       printf("Queue is empty      \n");
        return; 
     }
 

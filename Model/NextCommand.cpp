@@ -2,29 +2,22 @@
 
 
 void NextCommand::Process(const Player *player){
-    SoundStream *stream = ((Player*)player)->GetStream();
-    if(stream->isPlaying()==false){
-        std::cout<<"Nothing is playing\n";
-        return;
-    }
-    stream->stop();
+    SoundStream* stream = ((Player*)player)->GetStream();
 
-    Playlist * queue = ((Player*)player)->GetQueue();
+    Playlist *queue = ((Player*)player)->GetQueue();
 
+    track *t = queue->Next();
 
-    if(!queue->haveNext()){
-        queue->Reset();
+    if(t==NULL){
+        printf("No next songs      \n");
+        return; 
     }
 
-    track* t = queue->Next();
-
-    if( t==NULL){
-       std::cerr<<"Queue is empty\n";
-       return; 
+    if(stream->isPlaying()==true){
+        stream->stop(); 
     }
-
+   
     stream->init(t->GetPath()); //TODO
     stream->play();
-    
 
 }

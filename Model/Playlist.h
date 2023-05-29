@@ -17,6 +17,8 @@ bool haveNext();
 
 bool havePrevious();
 
+void Add(const track* _track);
+
 track* Previous();
 
 track* Next();

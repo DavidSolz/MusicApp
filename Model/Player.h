@@ -10,15 +10,17 @@ class Player {
 public: 
 
 
-    Player(const std::string &streamName);
+    Player(const std::string &streamName, const AudioEffectPipeline * pipeline);
     void CreatePlaylist();
     void EditPlaylist();
     void ShowPlaylists();
     Playlist* GetQueue();
+    PlaylistAssembler* GetAssembler();
     SoundStream* GetStream();
     ~Player();
 
 private: 
+    PlaylistAssembler *assembler;
     SoundStream* soundStream;
     Playlist* queue;
     std::list<Playlist*> playlists;

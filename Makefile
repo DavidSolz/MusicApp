@@ -1,11 +1,12 @@
 COMPILER = g++
-FLAGS = -w -Wall -lpulse-simple -lpulse -std=c++17
+FLAGS = -w -Wall -lpulse-simple -lpulse -std=c++17 -g
+TARGET = musicapp
 OUTPUTFOLDER = ./Out
 INPUTFOLDER = ./Model
 
-musicapp:
-	$(COMPILER) $(FLAGS) $(INPUTFOLDER)/*.cpp -o $(OUTPUTFOLDER)/musicapp
+musicapp: clean
+	$(COMPILER) $(FLAGS) $(INPUTFOLDER)/*.cpp -o $(OUTPUTFOLDER)/$(TARGET)
 
 clean:
-	rm -rf $(OUTPUTFOLDER)/*
+	rm -rf $(OUTPUTFOLDER)/$(TARGET) 
 
