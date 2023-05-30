@@ -8,7 +8,8 @@ PlaylistView::PlaylistView(const Player *player) : View(
     "Use arrow keys to select an item\n"
     "Press Enter to enter playlist item view\n"
     "Press A to add new playlist\n"
-    "Press S to edit playlist name"
+    "Press S to edit playlist name\n"
+    "Press V to automatically find all .wav"
     ){
     this->player=(Player*) player;
     
@@ -75,6 +76,13 @@ void PlaylistView::Render(){
         
         SetNextView(new PlaylistEditorView(p, player));
         break;
+    }else if(key=='v'){
+        std::string path;
+        std::cout<<"Enter path to crawl:";
+        std::cin>>path;
+        Playlist *p = new Playlist("Automatic search");
+        PlaylistAssembler::WavCrawler(p->GetTracks(), path);
+        items.push_back(p);
     }else if(key=='s'){
         if(items.size()==0)break;
         std::string name;

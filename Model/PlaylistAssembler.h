@@ -15,6 +15,8 @@ void ClearTerminal();
 
 void ExploreDirectory(const std::string& path, const std::vector<track*> &selected);
 
+static void WavCrawler(std::vector<track*> &selected, const std::string crawlPath=".");
+
 void FileExplorer(Playlist * selected);
 
 private:

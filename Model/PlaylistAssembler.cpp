@@ -43,6 +43,25 @@ void PlaylistAssembler::ExploreDirectory(const std::string& path, const std::vec
 
 }
 
+
+void PlaylistAssembler::WavCrawler(std::vector<track*> &selected, const std::string crawlPath){
+    
+    try {
+        for (const auto& entry : fs::recursive_directory_iterator(crawlPath)) {
+            const auto& entryPath = entry.path();
+            std::string fileName = entryPath.filename();
+            if(fileName[0]=='.')continue;
+
+            if (entry.is_regular_file() && entry.path().extension() == ".wav") {
+                selected.push_back(new track(fileName, entryPath));
+            }
+        }
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << "Error accessing folder: " << e.what() << std::endl;
+    }
+
+}
+
 void PlaylistAssembler::FileExplorer(Playlist * playlist){
     std::stack<std::string> previousDirs;
     std::string filePath;
