@@ -21,7 +21,7 @@ void PlayerView::QueuePrint(const Playlist* queue){
     for(int i=0; i<w.ws_col;i++){
         printf("=");
     }
-    printf("QueueView\n");
+    printf("\nQueueView\n");
     for(int i=0; i<w.ws_col;i++){
         printf("=");
     }
