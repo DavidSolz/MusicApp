@@ -72,13 +72,7 @@ bool Playlist::haveNext(){
 
 track* Playlist::Next(){
     if(haveNext()){
-        int temp = index;
-
-        if(temp+1>=tracks.size()){
-            index=0;
-        }
-
-        return tracks[temp];
+        return tracks[++index];
 
     }else{
         return NULL;

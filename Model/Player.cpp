@@ -8,6 +8,10 @@ Player::Player(const std::string &streamName, const AudioEffectPipeline * pipeli
     queue = new Playlist("Queue");
 
     queue->Add(new track("First", "/Users/solz/Desktop/MusicApp/Out/Firstborn.wav"));
+    queue->Add(new track("First", "/Users/solz/Desktop/MusicApp/Out/Firstborn.wav"));
+    queue->Add(new track("First", "/Users/solz/Desktop/MusicApp/Out/Firstborn.wav"));
+
+
 
     state = IDLE;
 }
@@ -35,7 +39,10 @@ void Player::Play(){
 
 void Player::Next(){
     if(queue->GetSize()==0)return;
-    queue->Next();
+    track *t = queue->Next();
+    if(t==NULL){
+        queue->Reset();
+    }
 }
 
 void Player::Pause(){
