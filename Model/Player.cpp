@@ -3,7 +3,8 @@
 
 
 Player::Player(const std::string &streamName, const AudioEffectPipeline * pipeline){
-    soundStream = new SoundStream(streamName, (AudioEffectPipeline*)pipeline);
+    pipe = (AudioEffectPipeline*)pipeline;
+    soundStream = new SoundStream(streamName, pipe);
     queue = new Playlist("Queue");
 
     queue->Add(new track("First", "/Users/solz/Desktop/MusicApp/Out/Firstborn.wav"));
@@ -73,6 +74,10 @@ void Player::SetList(const std::vector<Playlist*> &list){
 
 SoundStream * Player::GetStream(){
     return soundStream;
+}
+
+AudioEffectPipeline* Player::GetPipeline(){
+    return pipe;
 }
 
 Playlist* Player::GetQueue(){

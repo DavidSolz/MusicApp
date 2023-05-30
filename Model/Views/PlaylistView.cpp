@@ -7,7 +7,8 @@ PlaylistView::PlaylistView(const Player *player) : View(
     "Press Esc to return to MenuView\n"
     "Use arrow keys to select an item\n"
     "Press Enter to enter playlist item view\n"
-    "Press A to add new playlist"
+    "Press A to add new playlist\n"
+    "Press S to edit playlist name"
     ){
     this->player=(Player*) player;
     
@@ -74,6 +75,12 @@ void PlaylistView::Render(){
         
         SetNextView(new PlaylistEditorView(p, player));
         break;
+    }else if(key=='s'){
+        if(items.size()==0)break;
+        std::string name;
+        std::cout<<"Enter new name: ";
+        std::cin>>name;
+        items[selected]->SetPlaylistName(name);
     }else if (key == '\n') {
         SetNextView(new PlaylistEditorView(items[selected], player));
         break;

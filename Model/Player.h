@@ -17,7 +17,6 @@ public:
         PAUSE
     };
 
-
     Player(const std::string &streamName, const AudioEffectPipeline * pipeline);
     void Play();
     void Pause();
@@ -25,6 +24,7 @@ public:
     void Stop();
     void ClearQueue();
     Playlist* GetQueue();
+    AudioEffectPipeline* GetPipeline();
     std::vector<Playlist*> &GetList();
     void SetList(const std::vector<Playlist*> &list);
     SoundStream* GetStream();
@@ -32,6 +32,7 @@ public:
 
 private: 
     SoundStream* soundStream;
+    AudioEffectPipeline *pipe;
     PlayerState state;
     Playlist* queue;
     std::vector<Playlist*> playlists;

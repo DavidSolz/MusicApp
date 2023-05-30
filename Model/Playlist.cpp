@@ -34,6 +34,10 @@ void Playlist::SetTracks(std::vector<track*> &list){
     this->tracks=list;
 }
 
+void Playlist::SetPlaylistName(const std::string &name){
+    this->name=name;
+}
+
 std::string Playlist::GetPlaylistName(){
     return name;
 }

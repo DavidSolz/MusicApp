@@ -18,7 +18,7 @@ bool haveNext();
 bool havePrevious();
 
 void Add(const track* _track);
-
+void SetPlaylistName(const std::string &name);
 std::string GetPlaylistName();
 
 std::vector<track*> &GetTracks();
