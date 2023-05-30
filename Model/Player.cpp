@@ -54,6 +54,14 @@ void Player::Stop(){
     soundStream->stop();
 }
 
+void Player::Skip(const int &seconds){
+    if(soundStream->isPlaying()==false){
+        return;
+    }
+
+    soundStream->skipSeconds(seconds);
+
+}
 
 Player::~Player(){
     delete queue;

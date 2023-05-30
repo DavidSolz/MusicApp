@@ -42,11 +42,8 @@ char View::GetChar() {
 }
 
 void View::ClearConsole(){
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
+    std::cout << "\033[2J";
+    std::cout << "\033[H";
 }
 
 void View::PrintHeader(){

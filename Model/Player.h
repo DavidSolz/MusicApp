@@ -22,6 +22,7 @@ public:
     void Pause();
     void Next();
     void Stop();
+    void Skip(const int &seconds);
     void ClearQueue();
     Playlist* GetQueue();
     AudioEffectPipeline* GetPipeline();

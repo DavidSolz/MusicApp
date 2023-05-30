@@ -7,6 +7,7 @@ PlayerView::PlayerView(const Player *player): View(
     "Press S to stop\n"
     "Press N to next\n"
     "Press T to Pause\n"
+    "Press F to skip by x seconds\n"
     "Press C to clear the queue"
     ){
     this->player = ((Player *) player);
@@ -88,6 +89,11 @@ void PlayerView::Render(){
             player->ClearQueue();
         }else if(key=='n'){
             player->Next();
+        }else if(key=='f'){
+            int time=0;
+            std::cout<<"Seconds to skip: ";
+            std::cin>>time;
+            player->Skip(time);
         }
 
     ClearConsole();
