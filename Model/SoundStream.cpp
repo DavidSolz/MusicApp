@@ -37,7 +37,7 @@ char SoundStream::init(const std::string& fileName){
 
 void SoundStream::play(){
     if (!buff){
-        printf("nothing to play\n");
+        fprintf(stderr, "nothing to play\n");
         return;
     }
 
@@ -149,7 +149,7 @@ void SoundStream::printCurrentlyPlayingInfo(){
     if (buff){
         currentlyPlayingInfo.print();
     } else {
-        printf("nothing to show\n");
+        fprintf(stderr, "nothing to show\n");
     }
 }
 std::string SoundStream::fileLength(){
