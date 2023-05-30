@@ -78,8 +78,7 @@ void PlayerView::Render(){
             player->Pause();
         }
 
-    std::cout << "\033[2J";
-    std::cout << "\033[H";  
+    ClearConsole();
     }
 
 

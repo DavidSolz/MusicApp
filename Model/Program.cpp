@@ -8,7 +8,6 @@ int main(int argc, char* argv[]){
 
     Player *player = new Player(argv[0],pipeline);
 
-
     ViewController *controller = new ViewController(player);
 
     while(controller->GetCurrentView()!=NULL){

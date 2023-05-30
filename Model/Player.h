@@ -23,6 +23,7 @@ public:
     void Stop();
     Playlist* GetQueue();
     std::vector<Playlist*> &GetList();
+    void SetList(const std::vector<Playlist*> &list);
     PlaylistAssembler* GetAssembler();
     SoundStream* GetStream();
     ~Player();

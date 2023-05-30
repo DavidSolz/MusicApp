@@ -25,8 +25,17 @@ std::vector<track*> &Playlist::GetTracks(){
     return tracks;
 }
 
+void Playlist::SetTracks(std::vector<track*> &list){
+    this->tracks=list;
+}
+
 std::string Playlist::GetPlaylistName(){
     return name;
+}
+
+track* Playlist::GetCurrentTrack(){
+    if(tracks.size()>0 && index<tracks.size())return tracks[index];
+    return NULL;
 }
 
 std::string Playlist::GetCurrentName(){

@@ -6,11 +6,10 @@ PlaylistView::PlaylistView(const Player *player) : View(
     "PlaylistView",
     "Press Esc to return to MenuView\n"
     "Use arrow keys to select an item\n"
-    "Press E to enter playlist editor\n"
-    "Press A to add new playlist\n"
-    "Press I to enqueue playlist"
+    "Press Enter to enter playlist item view\n"
+    "Press A to add new playlist"
     ){
-    this->player=((Player*) player);
+    this->player=(Player*) player;
     
 }
 
@@ -65,18 +64,26 @@ void PlaylistView::Render(){
                 SetNextView(this);
                 break;
             }
-    }else if(key=='i'){
-        EnqueuePlaylist(items[selected]);
-    }else if (key == 'e') {
-        SetNextView(new PlaylistEditorView(items[selected]));
+    }else if(key=='a'){
+        std::string name;
+        std::cout<<"Enter playlist name: ";
+        std::cin>>name;
+        
+        Playlist *p = new Playlist(name);
+        items.push_back(p);
+        
+        SetNextView(new PlaylistEditorView(p, player));
+        break;
+    }else if (key == '\n') {
+        SetNextView(new PlaylistEditorView(items[selected], player));
         break;
     }
 
-    
-
-    std::cout << "\033[2J";
-    std::cout << "\033[H";    
+    ClearConsole();   
     }
+
+    player->SetList(items);
+
 }
 
 

@@ -20,6 +20,8 @@ public:
 
     void PrintFooter();
 
+    void ClearConsole();
+
     virtual void Render() = 0; 
 
     void SetNextView(const View* view);

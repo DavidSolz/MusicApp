@@ -41,6 +41,14 @@ char View::GetChar() {
     return buf;
 }
 
+void View::ClearConsole(){
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
 void View::PrintHeader(){
 
     

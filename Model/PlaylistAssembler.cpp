@@ -10,14 +10,7 @@ void PlaylistAssembler::ClearTerminal(){
     #endif
 }
 
-std::string PlaylistAssembler::GetRelativePath(const std::string& basePath, const std::string& fullPath) {
-    fs::path base = fs::absolute(basePath);
-    fs::path full = fs::absolute(fullPath);
-    return fs::relative(full, base).string();
-}
-
-
-void PlaylistAssembler::ExploreDirectory(const std::string& path, const std::vector<std::string> selected) {
+void PlaylistAssembler::ExploreDirectory(const std::string& path, const std::vector<track*> &selected) {
 
     std::cout << "Current Directory: " << path << std::endl;
     for (const auto& entry : fs::directory_iterator(path)) {
@@ -30,7 +23,7 @@ void PlaylistAssembler::ExploreDirectory(const std::string& path, const std::vec
             std::cout<<"[D] ";
         }else{
 
-            auto it = std::find(selected.begin(),selected.end(), entryPath.string());
+            auto it = std::find_if(selected.begin(),selected.end(), [entryPath](track * t){ return t->GetPath()==entryPath;});
 
             if(it!=selected.end()){
                 std::cout<<"[x] ";
@@ -43,22 +36,24 @@ void PlaylistAssembler::ExploreDirectory(const std::string& path, const std::vec
     }
 
     std::cout<<"\n==========Selected==========\n";
-    for(const auto &filePath : selected){
-        std::cout<<filePath<<"\n";
+    for(const auto &item : selected){
+        std::cout<<item->GetPath()<<"\n";
     }
     std::cout<<"============================\n";
 
 }
 
-void PlaylistAssembler::FileExplorer(std::vector<std::string> &selectedFiles){
+void PlaylistAssembler::FileExplorer(Playlist * playlist){
     std::stack<std::string> previousDirs;
     std::string filePath;
+
+    std::vector<track*> tracks = playlist->GetTracks();
 
     ClearTerminal();
 
     while (true) {
         
-        ExploreDirectory(directoryPath, selectedFiles);
+        ExploreDirectory(directoryPath, tracks);
 
         std::string param;
 
@@ -83,12 +78,21 @@ void PlaylistAssembler::FileExplorer(std::vector<std::string> &selectedFiles){
                 continue;
             }
             
+            track *t = NULL;
 
-            auto it = std::find(selectedFiles.begin(), selectedFiles.end(), filePath);
-            if (it != selectedFiles.end()) {
-                selectedFiles.erase(it);
+            for(const auto &element : tracks){
+                if(element->GetPath()==filePath){
+                    t = element;
+                    break;
+                }
+            }
+
+            if (t!=NULL) {
+                tracks.erase(std::remove_if(tracks.begin(), tracks.end(),
+                               [filePath](track *item){ return item->GetPath()==filePath;} ),tracks.end());
             } else {
-                selectedFiles.push_back(filePath);
+                std::string name  = fs::path(filePath).filename().string();
+                tracks.push_back(new track(name,filePath));
             }
 
 
@@ -119,6 +123,8 @@ void PlaylistAssembler::FileExplorer(std::vector<std::string> &selectedFiles){
 
         ClearTerminal();
     }
+
+    playlist->SetTracks(tracks);
 
     std::cout<<"Files stored succesfully\n";
 

@@ -23,7 +23,11 @@ std::string GetPlaylistName();
 
 std::vector<track*> &GetTracks();
 
+void SetTracks(std::vector<track*> &list);
+
 std::string GetCurrentName();
+
+track* GetCurrentTrack();
 
 track* Previous();
 

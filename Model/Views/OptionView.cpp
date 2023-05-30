@@ -25,7 +25,6 @@ void OptionView::Render(){
         break;
     }
 
-    std::cout << "\033[2J";
-    std::cout << "\033[H";    
+    ClearConsole();  
     }
 }
