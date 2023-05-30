@@ -2,6 +2,7 @@
 #define _PLAYLISTVIEW_H
 
 #include "View.h"
+#include "PlaylistEditorView.h"
 #include "../Player.h"
 
 #pragma once

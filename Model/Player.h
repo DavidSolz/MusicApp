@@ -9,6 +9,13 @@
 class Player {
 public: 
 
+    enum PlayerState{
+        IDLE,
+        PLAY,
+        STOP,
+        PAUSE
+    };
+
 
     Player(const std::string &streamName, const AudioEffectPipeline * pipeline);
     void Play();
@@ -23,6 +30,7 @@ public:
 private: 
     PlaylistAssembler *assembler;
     SoundStream* soundStream;
+    PlayerState state;
     Playlist* queue;
     std::vector<Playlist*> playlists;
 };

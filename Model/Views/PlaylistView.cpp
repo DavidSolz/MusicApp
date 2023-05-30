@@ -67,8 +67,8 @@ void PlaylistView::Render(){
             }
     }else if(key=='i'){
         EnqueuePlaylist(items[selected]);
-    }else if (key == '\n') {
-        //PlaylistEditor
+    }else if (key == 'e') {
+        SetNextView(new PlaylistEditorView(items[selected]));
         break;
     }
 

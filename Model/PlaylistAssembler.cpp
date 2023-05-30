@@ -18,11 +18,6 @@ std::string PlaylistAssembler::GetRelativePath(const std::string& basePath, cons
 
 
 void PlaylistAssembler::ExploreDirectory(const std::string& path, const std::vector<std::string> selected) {
-    std::cout<<"==========Commands==========\n";
-    std::cout<<"mark filename \n";
-    std::cout<<"cd [directory/..]\n";
-    std::cout<<"done \n";
-    std::cout<<"============================\n\n";
 
     std::cout << "Current Directory: " << path << std::endl;
     for (const auto& entry : fs::directory_iterator(path)) {

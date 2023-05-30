@@ -5,9 +5,11 @@
 Player::Player(const std::string &streamName, const AudioEffectPipeline * pipeline){
     soundStream = new SoundStream(streamName, (AudioEffectPipeline*)pipeline);
     queue = new Playlist("Queue");
+    state = IDLE;
 
     Playlist *p = new Playlist("Test1");
-    p->Add(new track("Sample.wav", "/Users/solz/Desktop/MusicApp/Out/Sample.wav"));
+    p->Add(new track("Sample", "/Users/solz/Desktop/MusicApp/Out/Sample.wav"));
+    p->Add(new track("Happy", "/Users/solz/Desktop/MusicApp/Out/Happy.wav"));
 
     playlists.push_back(p);
     playlists.push_back(new Playlist("Test2"));
@@ -17,10 +19,6 @@ void Player::Play(){
     if(soundStream->isPlaying()==true){
         soundStream->stop();
     }
-    
-    if(!queue->haveNext()){
-        queue->Reset();
-    }
 
     track *t = queue->Next();
 
@@ -28,7 +26,8 @@ void Player::Play(){
        return; 
     }
 
-    soundStream->init(t->GetPath()); //TODO
+    if(state!=PAUSE)soundStream->init(t->GetPath()); //TODO
+    state=PLAY;
     soundStream->play();
 }
 void Player::Pause(){
@@ -36,12 +35,14 @@ void Player::Pause(){
         return;
     }
 
+    state=PAUSE;
     soundStream->pause();
 }
 void Player::Stop(){
     if(soundStream->isPlaying()==false){
         return;
     }
+    state=STOP;
     soundStream->stop();
 }
 
