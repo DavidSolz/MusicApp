@@ -8,6 +8,8 @@ PlaylistEditorView::PlaylistEditorView(const Playlist* playlist, const Player* p
     "Press D to delete track\n"
     "Press I to add track to queue\n"
     "Press E to enter edit mode\n"
+    "Press P to play\n"
+    "Press S to stop"
     ){
 
     this->playlist=(Playlist*)playlist;
@@ -19,18 +21,22 @@ PlaylistEditorView::PlaylistEditorView(const Playlist* playlist, const Player* p
 void PlaylistEditorView::Render(){
 
     Playlist*queue = player->GetQueue();
+    std::vector<track*>tracks = playlist->GetTracks();
+    SoundStream *stream = player->GetStream();
+    selected=0;
+
 
     while(true){
     PrintHeader();
-    std::vector<track*>tracks = playlist->GetTracks();
 
     for(int i=0; i<tracks.size();i++){
-        if(selected==i){
-            printf("> %s\n",tracks[i]->GetName().c_str());
-        }else{
-            printf("%s\n",tracks[i]->GetName().c_str());
-        }
+        if (selected == i) {
+                std::cout << "> " << tracks[i]->GetName() << "\n";
+            } else {
+                std::cout << tracks[i]->GetName() << std::endl;
+            }
     }
+
     PrintFooter();
 
     char key = GetChar();
@@ -57,20 +63,35 @@ void PlaylistEditorView::Render(){
                 SetNextView(this);
                 break;
             }
+    }else if(key=='p'){
+        if(stream->isPlaying()){
+            stream->stop();
+        }
+        stream->init(tracks[selected]->GetPath());
+        stream->play();
+
+    }else if(key=='s'){
+        if(stream->isPlaying()){
+            stream->stop();
+        }
     }else if(key=='e'){
         assembler->FileExplorer(playlist);
+        tracks = playlist->GetTracks();
     }else if(key=='i'){
+        if(tracks.size()==0)break;
         queue->Add(tracks[selected]);
     }else if(key=='d'){
-       tracks.erase(tracks.begin()+selected);
-    }
-
-
-    ClearConsole();
+        if(tracks.size()==0)return;
+        tracks.erase(tracks.begin()+selected);
+        if(selected>=tracks.size()){
+            selected=0;
+        }
+        playlist->SetTracks(tracks);
     }
 
     
-
+    ClearConsole();
+    }
 
     SetNextView(this);
     

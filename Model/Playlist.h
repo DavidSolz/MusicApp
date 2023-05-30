@@ -27,7 +27,11 @@ void SetTracks(std::vector<track*> &list);
 
 std::string GetCurrentName();
 
+int GetSize();
+
 track* GetCurrentTrack();
+
+int GetCurrentIndex();
 
 track* Previous();
 

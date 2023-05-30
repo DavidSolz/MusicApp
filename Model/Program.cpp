@@ -18,6 +18,7 @@ int main(int argc, char* argv[]){
     printf("Have a nice day !    \n");
 
     delete controller;
+    delete player;
 
     return 0;
 }

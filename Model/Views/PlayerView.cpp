@@ -5,9 +5,9 @@ PlayerView::PlayerView(const Player *player): View(
     "Press Esc to return to MenuView\n"
     "Press P to play\n"
     "Press S to stop\n"
+    "Press N to next\n"
     "Press T to Pause\n"
-    "Press C to clear the queue\n"
-    "Press L to enable loop mode"
+    "Press C to clear the queue"
     ){
     this->player = ((Player *) player);
 }
@@ -32,8 +32,13 @@ void PlayerView::QueuePrint(const Playlist* queue){
     if(tracks.size()==0){
         printf("Queue is empty\n");
     }else{
+        int index = ((Playlist*)queue)->GetCurrentIndex();
         for(int i=0; i<tracks.size() && i<5; i++){
-            printf("%s \n",tracks[i]->GetName().c_str());
+            if(index==i){
+                std::cout<<"> "<<tracks[i]->GetName()<<"\n";
+            }else{
+                std::cout<<tracks[i]->GetName()<<"\n";
+            }
         }
     }
 
@@ -52,14 +57,17 @@ void PlayerView::Render(){
     
     PrintHeader();
 
-    if(stream->isPlaying()){
-        printf("%s\n", queue->GetCurrentName().c_str());
-        printf("Elapsed time: %s",((SoundStream*)stream)->timeElapsed().c_str());
+    track *t = queue->GetCurrentTrack();
+
+    if(stream->isPlaying() && t!=NULL){
+        printf("%s\n", t->GetName().c_str());
+        printf("Elapsed time: %s\n",((SoundStream*)stream)->timeElapsed().c_str());
 
     }else{
         printf("Nothing is playing\n");
     }
-    
+
+    printf("Loop mode : disabled\n");
 
     QueuePrint(queue);
 
@@ -76,6 +84,10 @@ void PlayerView::Render(){
             player->Stop();
         }else if(key=='t'){
             player->Pause();
+        }else if(key=='c'){
+            player->ClearQueue();
+        }else if(key=='n'){
+            player->Next();
         }
 
     ClearConsole();

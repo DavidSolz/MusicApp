@@ -3,6 +3,7 @@
 #include "SoundStream.h"
 #include "PlaylistAssembler.h"
 #include<iostream>
+
 #include<vector>
 
 #pragma once
@@ -20,16 +21,16 @@ public:
     Player(const std::string &streamName, const AudioEffectPipeline * pipeline);
     void Play();
     void Pause();
+    void Next();
     void Stop();
+    void ClearQueue();
     Playlist* GetQueue();
     std::vector<Playlist*> &GetList();
     void SetList(const std::vector<Playlist*> &list);
-    PlaylistAssembler* GetAssembler();
     SoundStream* GetStream();
     ~Player();
 
 private: 
-    PlaylistAssembler *assembler;
     SoundStream* soundStream;
     PlayerState state;
     Playlist* queue;

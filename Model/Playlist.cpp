@@ -3,6 +3,7 @@
 
 Playlist::Playlist(const std::string &name){
     this->name=name;
+    index=0;
 }
 
 
@@ -25,6 +26,10 @@ std::vector<track*> &Playlist::GetTracks(){
     return tracks;
 }
 
+int Playlist::GetSize(){
+    return tracks.size();
+}
+
 void Playlist::SetTracks(std::vector<track*> &list){
     this->tracks=list;
 }
@@ -34,8 +39,16 @@ std::string Playlist::GetPlaylistName(){
 }
 
 track* Playlist::GetCurrentTrack(){
-    if(tracks.size()>0 && index<tracks.size())return tracks[index];
-    return NULL;
+    if(index<tracks.size()){
+        return tracks[index];
+    }else{
+        index=0;
+        return NULL;
+    } 
+}
+
+int Playlist::GetCurrentIndex(){
+    return this->index;
 }
 
 std::string Playlist::GetCurrentName(){
@@ -55,10 +68,14 @@ bool Playlist::haveNext(){
 
 track* Playlist::Next(){
     if(haveNext()){
-        return tracks[index++];
-        if(index>=tracks.size()){
-            index = tracks.size()-1;
+        int temp = index;
+
+        if(temp+1>=tracks.size()){
+            index=0;
         }
+
+        return tracks[temp];
+
     }else{
         return NULL;
     }
