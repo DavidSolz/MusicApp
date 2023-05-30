@@ -3,12 +3,13 @@
 
 MenuView::MenuView(const Player *player) : View(
     "MenuView",
-    "Use arrow keys to select an item\nTo accept your selection press Enter"){
+    "Use arrow keys to select an item\n"
+    "To accept your selection press Enter"){
     this->optionCount=4;
     menuItems = new Item<View*>[optionCount];
     menuItems[0] = Item<View*>("Player",new PlayerView(player));
     menuItems[1] = Item<View*>("Playlists",new PlaylistView(player));
-    menuItems[2] = Item<View*>("Options",new OptionView());
+    menuItems[2] = Item<View*>("Options",new OptionView(player));
     menuItems[3] = Item<View*>("Exit", NULL);
 }
 
