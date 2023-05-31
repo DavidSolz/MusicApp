@@ -8,6 +8,7 @@ PlayerView::PlayerView(const Player *player): View(
     "Press N to next\n"
     "Press T to Pause\n"
     "Press F to skip by x seconds\n"
+    "Press L to enable loop mode\n"
     "Press C to clear the queue"
     ){
     this->player = ((Player *) player);
@@ -34,7 +35,7 @@ void PlayerView::QueuePrint(const Playlist* queue){
         printf("Queue is empty\n");
     }else{
         int index = ((Playlist*)queue)->GetCurrentIndex();
-        for(int i=0; i<tracks.size() && i<5; i++){
+        for(int i=index; i<tracks.size(); i++){
             if(index==i){
                 std::cout<<"> "<<tracks[i]->GetName()<<"\n";
             }else{
@@ -68,7 +69,7 @@ void PlayerView::Render(){
         printf("Nothing is playing\n");
     }
 
-    printf("Loop mode : disabled\n");
+    printf("Loop mode : %s\n",player->isLooping()==true?"enabled":"disabled");
 
     QueuePrint(queue);
 
@@ -81,6 +82,8 @@ void PlayerView::Render(){
             break;
         }else if(key=='p'){
             player->Play();
+        }else if(key=='l'){
+            player->LoopMode();
         }else if(key=='s'){
             player->Stop();
         }else if(key=='t'){

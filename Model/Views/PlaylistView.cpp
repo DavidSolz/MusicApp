@@ -9,6 +9,7 @@ PlaylistView::PlaylistView(const Player *player) : View(
     "Press Enter to enter playlist item view\n"
     "Press A to add new playlist\n"
     "Press S to edit playlist name\n"
+    "Press I to enqueue playlist\n"
     "Press V to automatically find all .wav"
     ){
     this->player=(Player*) player;
@@ -28,6 +29,7 @@ void PlaylistView::EnqueuePlaylist(const Playlist *playlist){
 void PlaylistView::Render(){
 
     std::vector<Playlist*> items = player->GetList();
+    Playlist* queue = player->GetQueue();
     selected=0;
 
     while(true){
@@ -89,7 +91,14 @@ void PlaylistView::Render(){
         std::cout<<"Enter new name: ";
         std::cin>>name;
         items[selected]->SetPlaylistName(name);
-    }else if (key == '\n') {
+    }else if (key == 'i') {
+        std::vector<track*> tracks = items[selected]->GetTracks();
+        for(int i=0 ;i<tracks.size();i++){
+            queue->Add(tracks[i]);
+        }
+    }
+    
+    else if (key == '\n') {
         SetNextView(new PlaylistEditorView(items[selected], player));
         break;
     }

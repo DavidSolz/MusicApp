@@ -93,6 +93,9 @@ void PlaylistEditorView::Render(){
     ClearConsole();
     }
 
+    if(stream->isPlaying()){
+            stream->stop();
+    }
     SetNextView(this);
     
 }

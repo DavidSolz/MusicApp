@@ -7,8 +7,6 @@ Player::Player(const std::string &streamName, const AudioEffectPipeline * pipeli
     soundStream = new SoundStream(streamName, pipe);
     queue = new Playlist("Queue");
 
-    queue->Add(new track("First", "/Users/solz/Desktop/MusicApp/Out/Firstborn.wav"));
-
     state = IDLE;
 }
 
@@ -49,6 +47,7 @@ void Player::Pause(){
     state=PAUSE;
     soundStream->pause();
 }
+
 void Player::Stop(){
     if(soundStream->isPlaying()==false){
         return;
@@ -67,8 +66,29 @@ void Player::Skip(const int &seconds){
 }
 
 Player::~Player(){
+    if(loopThread!=NULL){
+        loopThread->join();
+        delete loopThread;
+    }
     delete queue;
     delete soundStream;
+}
+
+bool Player::isLooping(){
+    return loopThread!=NULL;
+}
+
+void Player::LoopMode(){
+    if(loopThread==NULL){
+        loopThread==new std::thread([this](){
+
+
+
+        });
+    }else{
+        loopThread->join();
+        delete loopThread;
+    }
 }
 
 std::vector<Playlist*> &Player::GetList(){

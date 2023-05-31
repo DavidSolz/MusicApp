@@ -25,6 +25,8 @@ public:
     void Skip(const int &seconds);
     void ClearQueue();
     Playlist* GetQueue();
+    bool isLooping();
+    void LoopMode();
     AudioEffectPipeline* GetPipeline();
     std::vector<Playlist*> &GetList();
     void SetList(const std::vector<Playlist*> &list);
@@ -35,6 +37,7 @@ private:
     SoundStream* soundStream;
     AudioEffectPipeline *pipe;
     PlayerState state;
+    std::thread *loopThread;
     Playlist* queue;
     std::vector<Playlist*> playlists;
 };
