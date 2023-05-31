@@ -31,7 +31,7 @@ char SoundStream::init(const std::string& fileName){
         fprintf(stderr , "ERR: openning stream\n");
         return -1;
     }
-
+    pipeline->init(buff, currentlyPlayingInfo);
     return 0;
 }
 

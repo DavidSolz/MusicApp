@@ -21,7 +21,7 @@ EqualizerEffect::~EqualizerEffect(){
     delete[] eqFreq;
 }
 
-void EqualizerEffect::apply(audioBuffer* buff, const audioFileInfo& info){
+void EqualizerEffect::apply(AudioEffectPipelineBuffer* buff, const audioFileInfo& info){
 
 }
 
