@@ -8,14 +8,47 @@ PlayerView::PlayerView(const Player *player): View(
     "Press N to next\n"
     "Press T to Pause\n"
     "Press F to skip by x seconds\n"
-    "Press L to enable loop mode\n"
     "Press C to clear the queue"
     ){
     this->player = ((Player *) player);
+    Running = false;
+    input=false;
 }
 
-void PlayerView::Update(const SoundStream *stream){
+void PlayerView::ScreenRefreshF(SoundStream *stream, Playlist *queue){
+    char counter = 0;
+    while (Running) {
+        if (ToUpdate){
+            ClearConsole();
+            PrintHeader();
 
+            track *t = queue->GetCurrentTrack();
+
+            if(stream->isPlaying() && t!=NULL){
+                printf("%s\n", t->GetName().c_str());
+                printf("Elapsed time: %s\n",((SoundStream*)stream)->timeElapsed().c_str());
+
+            }else{
+                printf("Nothing is playing\n");
+            }
+
+            printf("Loop mode : %s\n",player->isLooping()==true?"enabled":"disabled");
+
+            QueuePrint(queue);
+
+            PrintFooter();
+            ToUpdate = false;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        if (stream->isPlaying() && input==false){
+            if (counter == 9){
+                counter = 0;
+                ToUpdate = true;
+            } else {
+                counter++;
+            }
+        }
+    }
 }
 
 void PlayerView::QueuePrint(const Playlist* queue){
@@ -51,39 +84,24 @@ void PlayerView::QueuePrint(const Playlist* queue){
 }
 
 void PlayerView::Render(){
+    Running = true;
 
     SoundStream *stream = ((Player*)player)->GetStream();
     Playlist *queue = player->GetQueue();
 
-    while(true){
-    
-    PrintHeader();
+    std::thread *refreshThread = new std::thread(&PlayerView::ScreenRefreshF, this, stream, queue);
 
-    track *t = queue->GetCurrentTrack();
+    while(Running){
 
-    if(stream->isPlaying() && t!=NULL){
-        printf("%s\n", t->GetName().c_str());
-        printf("Elapsed time: %s\n",((SoundStream*)stream)->timeElapsed().c_str());
-
-    }else{
-        printf("Nothing is playing\n");
-    }
-
-    printf("Loop mode : %s\n",player->isLooping()==true?"enabled":"disabled");
-
-    QueuePrint(queue);
-
-    PrintFooter();
-
+    ToUpdate = true;
     char key = GetChar();
 
         if(key=='\033' && GetChar()!='['){
             SetNextView(this);
+            Running=false;
             break;
         }else if(key=='p'){
             player->Play();
-        }else if(key=='l'){
-            player->LoopMode();
         }else if(key=='s'){
             player->Stop();
         }else if(key=='t'){
@@ -94,13 +112,16 @@ void PlayerView::Render(){
             player->Next();
         }else if(key=='f'){
             int time=0;
+            input=true;
             std::cout<<"Seconds to skip: ";
             std::cin>>time;
             player->Skip(time);
+            input=false;
         }
-
-    ClearConsole();
     }
+
+    if(refreshThread->joinable())refreshThread->join();
+    delete refreshThread;
 
 
 }
