@@ -11,6 +11,8 @@
 class PlaylistAssembler{
 public:
 
+PlaylistAssembler();
+
 void ClearTerminal();
 
 void ExploreDirectory(const std::string& path, const std::vector<track*> &selected);
@@ -21,7 +23,7 @@ void FileExplorer(Playlist * selected);
 
 private:
 
-std::string directoryPath = ".";
+std::string directoryPath;
 
 };
 

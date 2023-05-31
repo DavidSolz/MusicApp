@@ -10,6 +10,10 @@ void PlaylistAssembler::ClearTerminal(){
     #endif
 }
 
+PlaylistAssembler::PlaylistAssembler(){
+    directoryPath="..";
+}
+
 void PlaylistAssembler::ExploreDirectory(const std::string& path, const std::vector<track*> &selected) {
 
     std::cout << "Current Directory: " << path << std::endl;
