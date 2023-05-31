@@ -1,5 +1,4 @@
 #include "OutStreamPulseAudio.h"
-#include "audioBuffer.h"
 
 #include <iostream>
 #include <pulse/sample.h>

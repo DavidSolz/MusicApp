@@ -5,8 +5,8 @@
 #include <pulse/error.h>
 #include <string>
 
-#include "audioBuffer.h"
-#include "audioFileInfo.h"
+#include "buff/audioBuffer.h"
+#include "buff/audioFileInfo.h"
 
 class IOutStream{
 public:

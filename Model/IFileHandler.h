@@ -4,8 +4,8 @@
 #include <string>
 #include <fstream>
 
-#include "audioBuffer.h"
-#include "audioFileInfo.h"
+#include "buff/audioBuffer.h"
+#include "buff/audioFileInfo.h"
 
 class IFileHandler{
 public:

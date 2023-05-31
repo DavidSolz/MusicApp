@@ -5,7 +5,7 @@ OUTPUTFOLDER = ./Out
 INPUTFOLDER = ./Model
 
 musicapp: clean
-	$(COMPILER) $(FLAGS) $(INPUTFOLDER)/*.cpp $(INPUTFOLDER)/Views/*.cpp -o $(OUTPUTFOLDER)/$(TARGET)
+	$(COMPILER) $(FLAGS) $(INPUTFOLDER)/*.cpp $(INPUTFOLDER)/Views/*.cpp $(INPUTFOLDER)/effects/*.cpp $(INPUTFOLDER)/buff/*.cpp -o $(OUTPUTFOLDER)/$(TARGET)
 
 clean:
 	rm -rf $(OUTPUTFOLDER)/$(TARGET) 
